@@ -1,0 +1,84 @@
+// Working out for 1st too much! difficulty problem at trytodecrypt site
+// found here: https://www.trytodecrypt.com/decrypt.php?id=19
+
+ciphertext = 0E0508000609060F070F0105568B8E901C436B6D84C7597F4D502F621B4D2669395E2E537981
+
+// experimenting seems to suggest that char from plaintext is encoded in same way as prev
+// using the following hex encoding scheme
+
+0 = 00
+1 = 01
+2 = 02
+...
+8 = 08
+9 = 09
+
+a = 0A
+b = 0B
+...
+g = 10
+h = 11
+...
+w = 20
+x = 21
+y = 22
+z = 23
+
+A = 24
+B = 25
+...
+M = 30
+N = 31
+...
+Y = 3C
+Z = 3D
+
+space = 46
+fullstop = 40
+
+// each char is added to a offset, which is also shown in ciphertext immediately
+// before the encrypted char
+
+// there also seems to be an extra prefix char in ciphertext per char in plaintext
+// however it doesnt seem to actually affect encryption, potentially a checksum??
+
+prefix = 0E0508000609060F // does not appear to be wholly right, should be longer
+
+// ciphertext split by char (offset, encrypted char)
+07 0F
+01 05
+56 8B
+8E 90
+1C 43
+6B 6D
+84 C7
+59 7F
+4D 50
+2F 62
+1B 4D
+26 69
+39 5E
+2E 53
+79 81
+
+// original encoding (-offset + encoded char)
+-07 +0F = 08 : 8 // not part of answer
+-01 +05 = 04 : 4 // not part of answer
+-56 +8B = 35 : R
+-8E +90 = 02 : 2
+-1C +43 = 27 : D
+-6B +6D = 02 : 2
+-84 +C7 = 43 : :
+-59 +7F = 26 : C
+-4D +50 = 03 : 3
+-2F +62 = 33 : P
+-1B +4D = 32 : O
+-26 +69 = 43 : :
+-39 +5E = 25 : B
+-2E +53 = 25 : B
+-79 +81 = 08 : 8
+
+plaintext = R2D2:C3PO:BB8
+
+// correctly guessed, 13th person to do so
+

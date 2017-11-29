@@ -1,0 +1,104 @@
+// Working out for 4th hard problem at trytodecrypt site
+// found here: https://www.trytodecrypt.com/decrypt.php?id=16
+
+ciphertext = 32632E3149844B82115794BA78AD87C36DA01148707080C65459255C2C6487B02851
+
+// some experimentation shows that each plaintext character is:
+
+// 1. encoded to hex using the following hex encoding scheme
+
+0 = 00
+1 = 01
+2 = 02
+...
+8 = 08
+9 = 09
+
+a = 0A
+b = 0B
+...
+g = 10
+h = 11
+...
+w = 20
+x = 21
+y = 22
+z = 23
+
+A = 24
+B = 25
+...
+M = 30
+N = 31
+...
+Y = 3C
+Z = 3D
+
+space = 46
+fullstop = 40
+
+// 2. added to an arbitrary hex offset
+
+// 3. shown in a 4 digit chunk in ciphertext as offset followed by encoded char
+
+// thus ciphertext can be broken down in to 4 digit chunks for each char
+3263
+2E31
+4984
+4B82
+1157
+94BA
+78AD
+87C3
+6DA0
+1148
+7070
+80C6
+5459
+255C
+2C64
+87B0
+2851
+
+// then the offset can be subtracted from the encoded char
+63 - 32 = 31
+31 - 2E = 03
+84 - 49 = 3B
+82 - 4B = 37
+57 - 11 = 46
+BA - 94 = 26
+AD - 78 = 35
+C3 - 87 = 3C
+A0 - 6D = 33
+48 - 11 = 37
+70 - 70 = 00
+C6 - 80 = 46
+59 - 54 = 05
+5C - 25 = 37
+64 - 2C = 38
+B0 - 87 = 29
+51 - 28 = 29
+
+// then we can reverse encoding scheme to get plaintext chars
+31: N
+03: 3
+3B: X
+37: T
+46: space
+26: C
+35: R
+3C: Y
+33: P
+37: T
+00: 0
+46: space
+05: 5
+37: T
+38: U
+29: F
+29: F
+
+plaintext = N3XT CRYPT0 5TUFF
+
+// guess is correct, 16th user to submit solution!
+

@@ -1,0 +1,98 @@
+// Working out for 3rd hard problem at trytodecrypt site
+// found here: https://www.trytodecrypt.com/decrypt.php?id=15
+
+ciphertext = 574168755997984F7A7E76AD6954A662538F764F7A5C4F876544
+
+// some experimentation with sample encryptions show:
+// - first 6 digits of ciphertext are key
+// - this can be split in to 3 2digit subkeys
+// - each subkey encrpypts 1 char then the next subkey is switched to
+//   i.e. 1st subkey encrypts 4th, 7th, 10th, ... chars
+//        2nd subkey encrypts 5th, 8th, 11th, ... chars
+//        3rd subkey encrypts 6th, 9th, 12th, ... chars
+// - each char is represented by 2 hex digits, 
+//   and they immediately follow keys in ciphertext
+// - to encrpyt a char the subkey is added to a unique offset for each digit
+// - the unique offsets have been worked out for a subset of available chars
+
+// subkeys (hex)
+57,41,68
+
+// worked out char offsets (hex)
+a - 27
+b - 0b
+c - 41
+d - 45
+e - 0e
+f - 10
+g - 11
+h - 05
+i - 2f
+j - 1c
+k - 16
+l - 18
+m - 04
+n - 35
+o - 3e
+p - 37
+q - 1d
+r - 1f
+s - 15
+t - 21
+u - 1a
+v - 23
+w - 00
+x - 0c
+y - 3b
+z - 30
+fullstop - 03
+space - 12 
+
+// ciphertext char values (hex)
+75,59,97,
+98,4F,7A,
+7E,76,AD,
+69,54,A6,
+62,53,8F,
+76,4F,7A,
+5C,4F,87,
+65,44.
+
+// initial offsets (ciphertext - MSB(keys))
+25,19,37,
+48,0F,1A,
+2E,36,4D,
+19,14,46,
+12,13,2F,
+26,0F,1A,
+0C,0F,27,
+15,04.
+
+// full offsets (value - MSB(keys) - LSB(keys))
+1E,18,2F,
+41,0E,12,
+27,35,45,
+12,13,3E,
+0B,12,27,
+1F,0E,12,
+05,0E,1F,
+0E,03.
+
+// plaintext (? = unknown values)
+?,l,i,
+c,e,space,
+a,n,d,
+space,?,o,
+b,space,a,
+r,e,space,
+h,e,r,
+e,fullstop.
+
+?lice and ?ob are here. 
+// unknown chars likely A,B 
+// Alice & Bob are typical names for communicating parties in crypto
+
+// guess
+Alice and Bob are here.
+
+// correct guess, 16th person to successfully solve!

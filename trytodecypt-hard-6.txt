@@ -1,0 +1,66 @@
+// Working out for 6th hard problem at trytodecrypt site
+// found here: https://www.trytodecrypt.com/decrypt.php?id=18
+
+ciphertext = 35445FA0D18F47618981AE5D3A98A5138EAE2A303A5D688B6C4461703B902F308F5F125F7725
+
+// seems the same encryption as hard problem 5, but plaintext reversed before encoding
+// each plaintext character is:
+
+// 1. encoded to hex using the following hex encoding scheme
+
+0 = 00
+1 = 01
+2 = 02
+...
+8 = 08
+9 = 09
+
+a = 0A
+b = 0B
+...
+g = 10
+h = 11
+...
+w = 20
+x = 21
+y = 22
+z = 23
+
+A = 24
+B = 25
+...
+M = 30
+N = 31
+...
+Y = 3C
+Z = 3D
+
+space = 46
+fullstop = 40
+
+// 2. subtracted from an arbitrary hex offset
+
+// 3. 1st half of ciphertext is key, in 2 digit chunks
+35 44 5F A0 D1 8F 47 61 89 81 AE 5D 3A 98 A5 13 8E AE 2A
+
+// 4. 2nd half of ciphertext is plaintext encoded by key
+30 3A 5D 68 8B 6C 44 61 70 3B 90 2F 30 8F 5F 12 5F 77 25
+
+
+// we can subtract the encoded text from the key to get the original encoding
+35 44 5F A0 D1 8F 47 61 89 81 AE 5D 3A 98 A5 13 8E AE 2A
+ -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  - 
+30 3A 5D 68 8B 6C 44 61 70 3B 90 2F 30 8F 5F 12 5F 77 25
+ =  =  =  =  =  =  =  =  =  =  =  =  =  =  =  =  =  =  =
+05 0A 02 38 46 23 03 00 19 46 1E 2E 0A 09 46 01 2F 37 05
+
+// we can use original encoding scheme to put these back to plaintext
+05 0A 02 38 46 23 03 00 19 46 1E 2E 0A 09 46 01 2F 37 05
+ =  =  =  =  =  =  =  =  =  =  =  =  =  =  =  =  =  =  = 
+ 5  a  2  U     z  3  0  p     u  K  a  9     1  L  T  5
+
+// finally we reverse the text to get plaintext
+
+plaintext = 5TL1 9aKu p03z U2a5
+
+// correct answer, 15th user to submit right one!

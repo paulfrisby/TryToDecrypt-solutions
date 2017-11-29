@@ -1,0 +1,63 @@
+// Working out for 5th hard problem at trytodecrypt site
+// found here: https://www.trytodecrypt.com/decrypt.php?id=17
+
+ciphertext = 5D2EAF346C9271B7489BBA3A52326752248C2255826771378D741E48205A
+
+// some experimentation shows that each plaintext character is:
+
+// 1. encoded to hex using the following hex encoding scheme
+
+0 = 00
+1 = 01
+2 = 02
+...
+8 = 08
+9 = 09
+
+a = 0A
+b = 0B
+...
+g = 10
+h = 11
+...
+w = 20
+x = 21
+y = 22
+z = 23
+
+A = 24
+B = 25
+...
+M = 30
+N = 31
+...
+Y = 3C
+Z = 3D
+
+space = 46
+fullstop = 40
+
+// 2. subtracted from an arbitrary hex offset
+
+// 3. 1st half of ciphertext is key, in 2 digit chunks
+5D,2E,AF,34,6C,92,71,B7,48,9B,BA,3A,52,32,67
+
+// 4. 2nd half of ciphertext is plaintext encoded by key
+52,24,8C,22,55,82,67,71,37,8D,74,1E,48,20,5A
+
+
+// we can subtract the encoded text from the key to get the original encoding
+5D 2E AF 34 6C 92 71 B7 48 9B BA 3A 52 32 67
+ -  -  -  -  -  -  -  -  -  -  -  -  -  -  - 
+52 24 8C 22 55 82 67 71 37 8D 74 1E 48 20 5A
+ =  =  =  =  =  =  =  =  =  =  =  =  =  =  = 
+0B 0A 23 12 17 10 0A 46 11 0E 46 1C 0A 12 0D
+
+// we can use original encoding scheme to put these back to plaintext
+0B 0A 23 12 17 10 0A 46 11 0E 46 1C 0A 12 0D
+ =  =  =  =  =  =  =  =  =  =  =  =  =  =  = 
+ b  a  z  i  n  g  a     h  e     s  a  i  d
+
+plaintext = bazinga he said
+
+// correct answer, 15th user to submit right one!
